@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel='icon' type='image/png' sizes='16x16'
+    href='https://raw.githubusercontent.com/Techno-san/Wishing-Card/main/Image/icon.png'>
+  <title>Dragging paper ❤️</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Zeyada&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+
+    @import url('https://fonts.googleapis.com/css2?family=Zeyada&display=swap');
+
+    body,
+    form {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-size: 1000px;
+      background-image: url("https://www.psdgraphics.com/wp-content/uploads/2022/01/white-math-paper-texture.jpg");
+      background-position: center center;
+    }
+
+    .paper {
+      background-image: url("https://i0.wp.com/textures.world/wp-content/uploads/2018/10/2-Millimeter-Paper-Background-copy.jpg?ssl=1");
+      background-size: 750px;
+      background-position: center center;
+      padding: 30px 150px;
+      /* //min-width: 800px; */
+
+      transform: rotateZ(-5deg);
+      box-shadow: 1px 15px 20px 0px rgba(0, 0, 0, 0.5);
+
+      position: absolute;
+    }
+
+    .paper.heart {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      padding: 0;
+      border-radius: 50%;
+    }
+
+    .paper.image {
+      padding: 15px;
+    }
+
+    .paper.image p {
+      font-size: 45px;
+    }
+
+    img {
+      max-height: 300px;
+      width: 100%;
+      user-select: none;
+    }
+
+    .paper.heart::after {
+      content: "";
+      background-image: url('https://cdn.pixabay.com/photo/2016/03/31/19/25/cartoon-1294994__340.png');
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-size: 225px;
+      background-position: center center;
+      background-repeat: no-repeat;
+      opacity: 0.6;
+    }
+
+    .paper:nth-of-type(3n) {
+      background-position: left top;
+    }
+
+    p {
+      font-family: 'Zeyada';
+      font-size: 75px;
+      color: rgb(0, 0, 100);
+      opacity: 0.75;
+      user-select: none;
+      /* filter: drop-shadow(2px 1.5px 1px rgba(0,0,105,0.9)); */
+    }
+
+    .radi {
+      height: 20px;
+
+    }
+  </style>
+
+
+</head>
+
+<body>
+  <!-- A pen by Anish  -->
+  <form class="form" name="formName" method="post">
+    <div class="paper heart"></div>
+
+    <div class="paper image">
+
+      <p>Click image to Next ></p>
+      <button type="submit"><img
+          src="https://raw.githubusercontent.com/Techno-san/flip-card-/main/Image/image4.jpg" /></button>
+    </div>
+
+
+    <div class="paper image">
+      <p> Make all our </p>
+      <p> dreams come true 😍 </p>
+      <img src="https://raw.githubusercontent.com/Techno-san/Dragging-paper-/main/Image/image3.jpg" />
+    </div>
+
+    <div class="paper image">
+      <p><input class="radio" name="yes" type="radio">Yes
+        <input class="radio" name="no" type="radio">No
+      </p>
+
+      <img src="https://raw.githubusercontent.com/Techno-san/Dragging-paper-/main/Image/image1.jpg" />
+    </div>
+
+    <div class="paper image">
+      <p>Will you marry me? </p>
+      <p> After we Capable.❤️</p>
+
+      <img src="https://raw.githubusercontent.com/Techno-san/Dragging-paper-/main/Image/image2.jpg" />
+    </div>
+
+
+
+    <div class="paper red">
+      <p class="p1"> You make every moment </p>
+      <p class="p2">magical. 😍</p>
+    </div>
+
+    <div class="paper">
+      <p class="p1">Dear love! </p>
+      <p class="p1">Stay with me.<span style="color: red !important;">❤️</span></p>
+    </div>
+
+    <div class="paper">
+      <p class="p1">Drag the papers to move!</p>
+    </div>
+    <!--add audio -->
+    <!-- change music -->
+    <audio class="audio" hidden autoplay src="https://audio.jukehost.co.uk/p3e7OszgJmUCNlS4kqlwyn336vP6vre9">
+    </audio>
+  </form>
+</body>
+
+<!-- Code for mobile -->
+<script>
+  let highestZ = 1;
+
+  class Paper {
+    holdingPaper = false;
+    touchStartX = 0;
+    touchStartY = 0;
+    touchMoveX = 0;
+    touchMoveY = 0;
+    touchEndX = 0;
+    touchEndY = 0;
+    prevTouchX = 0;
+    prevTouchY = 0;
+    velX = 0;
+    velY = 0;
+    rotation = Math.random() * 30 - 15;
+    currentPaperX = 0;
+    currentPaperY = 0;
+    rotating = false;
+
+    init(paper) {
+      paper.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        if (!this.rotating) {
+          this.touchMoveX = e.touches[0].clientX;
+          this.touchMoveY = e.touches[0].clientY;
+
+          this.velX = this.touchMoveX - this.prevTouchX;
+          this.velY = this.touchMoveY - this.prevTouchY;
+        }
+
+        const dirX = e.touches[0].clientX - this.touchStartX;
+        const dirY = e.touches[0].clientY - this.touchStartY;
+        const dirLength = Math.sqrt(dirX * dirX + dirY * dirY);
+        const dirNormalizedX = dirX / dirLength;
+        const dirNormalizedY = dirY / dirLength;
+
+        const angle = Math.atan2(dirNormalizedY, dirNormalizedX);
+        let degrees = 180 * angle / Math.PI;
+        degrees = (360 + Math.round(degrees)) % 360;
+        if (this.rotating) {
+          this.rotation = degrees;
+        }
+
+        if (this.holdingPaper) {
+          if (!this.rotating) {
+            this.currentPaperX += this.velX;
+            this.currentPaperY += this.velY;
+          }
+          this.prevTouchX = this.touchMoveX;
+          this.prevTouchY = this.touchMoveY;
+
+          paper.style.transform = `translateX(${this.currentPaperX}px) translateY(${this.currentPaperY}px) rotateZ(${this.rotation}deg)`;
+        }
+      })
+
+      paper.addEventListener('touchstart', (e) => {
+        if (this.holdingPaper) return;
+        this.holdingPaper = true;
+
+        paper.style.zIndex = highestZ;
+        highestZ += 1;
+
+        this.touchStartX = e.touches[0].clientX;
+        this.touchStartY = e.touches[0].clientY;
+        this.prevTouchX = this.touchStartX;
+        this.prevTouchY = this.touchStartY;
+      });
+      paper.addEventListener('touchend', () => {
+        this.holdingPaper = false;
+        this.rotating = false;
+      });
+
+      // For two-finger rotation on touch screens
+      paper.addEventListener('gesturestart', (e) => {
+        e.preventDefault();
+        this.rotating = true;
+      });
+      paper.addEventListener('gestureend', () => {
+        this.rotating = false;
+      });
+    }
+  }
+
+  const papers = Array.from(document.querySelectorAll('.paper'));
+
+  papers.forEach(paper => {
+    const p = new Paper();
+    p.init(paper);
+  });
+</script>
+<!-- Code for PC or laptop
+<script>
+  let highestZ = 1;
+
+  class Paper {
+    holdingPaper = false;
+    mouseTouchX = 0;
+    mouseTouchY = 0;
+    mouseX = 0;
+    mouseY = 0;
+    prevMouseX = 0;
+    prevMouseY = 0;
+    velX = 0;
+    velY = 0;
+    rotation = Math.random() * 30 - 15;
+    currentPaperX = 0;
+    currentPaperY = 0;
+    rotating = false;
+
+    init(paper) {
+      document.addEventListener('mousemove', (e) => {
+        if (!this.rotating) {
+          this.mouseX = e.clientX;
+          this.mouseY = e.clientY;
+
+          this.velX = this.mouseX - this.prevMouseX;
+          this.velY = this.mouseY - this.prevMouseY;
+        }
+
+        const dirX = e.clientX - this.mouseTouchX;
+        const dirY = e.clientY - this.mouseTouchY;
+        const dirLength = Math.sqrt(dirX * dirX + dirY * dirY);
+        const dirNormalizedX = dirX / dirLength;
+        const dirNormalizedY = dirY / dirLength;
+
+        const angle = Math.atan2(dirNormalizedY, dirNormalizedX);
+        let degrees = 180 * angle / Math.PI;
+        degrees = (360 + Math.round(degrees)) % 360;
+        if (this.rotating) {
+          this.rotation = degrees;
+        }
+
+        if (this.holdingPaper) {
+          if (!this.rotating) {
+            this.currentPaperX += this.velX;
+            this.currentPaperY += this.velY;
+          }
+          this.prevMouseX = this.mouseX;
+          this.prevMouseY = this.mouseY;
+
+          paper.style.transform = `translateX(${this.currentPaperX}px) translateY(${this.currentPaperY}px) rotateZ(${this.rotation}deg)`;
+        }
+      })
+
+      paper.addEventListener('mousedown', (e) => {
+        if (this.holdingPaper) return;
+        this.holdingPaper = true;
+
+        paper.style.zIndex = highestZ;
+        highestZ += 1;
+
+        if (e.button === 0) {
+          this.mouseTouchX = this.mouseX;
+          this.mouseTouchY = this.mouseY;
+          this.prevMouseX = this.mouseX;
+          this.prevMouseY = this.mouseY;
+        }
+        if (e.button === 2) {
+          this.rotating = true;
+        }
+      });
+      window.addEventListener('mouseup', () => {
+        this.holdingPaper = false;
+        this.rotating = false;
+      });
+    }
+  }
+
+  const papers = Array.from(document.querySelectorAll('.paper'));
+
+  papers.forEach(paper => {
+    const p = new Paper();
+    p.init(paper);
+  });
+</script>-->
+
+<!--input code-->
+
+<script>
+
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbzpwu9DHwZOoUhby95QqEPUkzCki6K4EcZQH3t9XaUBo2axL7uG-8m95gMjZrDERuxpug/exec'
+  const form = document.forms['formName']
+
+  form.addEventListener('submit', e => {
+    e.preventDefault()
+    fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+      .then(response => alert("love you! @deepa_verma."))
+      .then(() => { window.location.assign('https://techno-san.github.io/photo-flip/'); })
+      .catch(error => console.error('Error!', error.message))
+  })
+</script>
+
+</html> 

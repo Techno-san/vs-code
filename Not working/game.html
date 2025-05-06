@@ -1,0 +1,1293 @@
+<!-- Author Developer Rahul -->
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Developer Rahul - CodePen - React Pokedex</title>
+  <style>
+  /* Author : Developer Rahul */
+h1 {
+    color: white;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(
+        15deg,
+        rgba(41, 41, 41, 1) 4%,
+        rgba(49, 49, 49, 1) 24%,
+        rgba(128, 128, 128, 1) 64%,
+        rgba(138, 138, 138, 1) 70%,
+        rgba(230, 230, 230, 1) 81%,
+        rgba(255, 255, 255, 1) 86%,
+        rgba(220, 220, 220, 1) 89%,
+        rgba(230, 230, 230, 1) 100%
+    );
+    background-color: #09a8ff;
+    background-blend-mode: overlay;
+}
+
+#root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.pokedex {
+    background-color: #e61515;
+    width: 848px;
+    margin: 0 auto;
+    padding: 1em;
+    border-radius: 15px;
+    border: double black 10px;
+    display: flex;
+}
+
+.panel {
+    width: 359px;
+    padding: 10px;
+    border: inset #b31818 3px;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+}
+
+.right-panel {
+    padding: 0;
+    width: 379px;
+}
+
+.panel-row {
+    display: flex;
+    border-bottom: groove #757575 3px;
+    justify-content: space-evenly;
+}
+
+.panel-row:last-child {
+    border-top: groove #757575 3px;
+    border-bottom: none;
+}
+
+.divider {
+    display: flex;
+    flex-direction: column;
+    width: 30px;
+    margin: 0 20px;
+    align-items: center;
+    border: inset #460f0f 4px;
+    border-radius: 4px;
+    background: #460f0f;
+}
+
+.divider > * {
+    border-radius: 4px;
+    border: solid #2d0d0d 2px;
+}
+
+.hinge {
+    background: linear-gradient(90deg, #891313 0, #b31818 30%, #e61515 45%, #fd5555 65%, #e61515 95%);
+    border-right-color: #fd5555;
+    border-top-color: #fd5555;
+    flex: 10;
+    width: 100%;
+    border-left-color: #5f1010;
+}
+.gap:first-child {
+    border-radius: 0 0 5px 5px;
+    border-top: none;
+}
+.gap:last-child {
+    border-radius: 5px 5px 0 0;
+}
+.gap {
+    background: linear-gradient(90deg, #460f0f 0, #891313 30%, #b31818 45%, #fd5555 65%, #b31818 95%);
+    border-top-color: #891313;
+    border-right-color: #b31818;
+    flex: 1;
+    width: 95%;
+}
+.screen {
+    background: linear-gradient(14deg, rgb(165, 205, 83) 60%, rgb(193, 217, 144) 65%);
+    padding: 5px;
+    border-radius: 3px;
+    font-family: "VT323";
+    border: inset #879a65 3px;
+}
+.pokemon-name {
+    font-size: 28px;
+    letter-spacing: 4px;
+    text-transform: capitalize;
+    height: 45px;
+    box-sizing: border-box;
+}
+.name-no {
+    float: right;
+    text-transform: lowercase;
+}
+.pokemon-description {
+    font-size: 18px;
+    letter-spacing: 0;
+    min-height: 115px;
+    box-sizing: border-box;
+    flex: 1;
+}
+.pokemon-sprite {
+    width: 100%;
+    display: flex;
+    image-rendering: pixelated;
+    border: inset #9aa28b 3px;
+    border-radius: 5px;
+    margin: 10px 0;
+    box-sizing: border-box;
+    background: linear-gradient(15deg, #cad5b5 64%, #dde2d4 70%, #dde2d4 81%, #fff 86%, #dde2d4 89%, #dde2d4 100%);
+}
+.sprite-controls {
+    display: flex;
+    justify-content: space-around;
+    font-family: "Staatliches", cursive;
+    margin-bottom: 10px;
+}
+
+.sprite-control {
+    height: 30px;
+    width: 30px;
+    border: groove grey 3px;
+    border-radius: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(60deg);
+    color: black;
+    padding: 1px;
+    border-color: #b06868;
+}
+
+.sprite-control:hover {
+    border-color: #b8ed7c;
+}
+.sprite-control:active {
+    border-color: #f4fcb9;
+}
+
+.sprite-control > * {
+    transform: rotate(-60deg);
+}
+
+.sprite-controls-shiny {
+    transform: rotate(0);
+    background: linear-gradient(14deg, #bf8823 10%, #ffee90 25%, #e6a617 47%, #ffee90 73%, #fff6c8 74%, #ffee90 80%);
+    border-color: #cdb589;
+    width: 90px;
+    text-shadow: white -1px 1px;
+}
+
+.sprite-control-selected {
+    border-color: #b8ed7c;
+}
+
+.sprite-controls-shiny > * {
+    transform: rotate(0);
+}
+.pokemon-sprite-small {
+    height: 120px;
+    width: 120px;
+    margin: 3px 0;
+}
+/* types */
+.type {
+    color: rgba(0, 0, 0, 0.9);
+    text-transform: capitalize;
+    font-size: 1.25em;
+    padding: 2px;
+    margin: 2px;
+    border: groove #757575 3px;
+    border-radius: 10px;
+    width: 150px;
+    font-family: "Staatliches", cursive;
+    text-align: center;
+    letter-spacing: 2px;
+    text-shadow: rgba(255, 255, 255, 0.3) -1px 1px;
+    align-self: center;
+    background: linear-gradient(
+        15deg,
+        rgba(128, 128, 128, 0.5) 64%,
+        rgba(138, 138, 138, 0.5) 70%,
+        rgba(230, 230, 230, 0.5) 81%,
+        rgba(255, 255, 255, 0.5) 86%,
+        rgba(220, 220, 220, 0.5) 89%,
+        rgba(230, 230, 230, 0.5) 100%
+    );
+    background-blend-mode: hard-light;
+}
+.panel-header {
+    text-transform: capitalize;
+    font-size: 1.25em;
+    padding: 5px;
+    font-family: "Staatliches", cursive;
+    letter-spacing: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(14deg, #460f0f 0, #891313 30%, #b31818 45%, #fd5555 65%, #b31818 95%);
+    border: groove #e61515 3px;
+    border-width: 3px 2px;
+    text-shadow: #fd5555 -1px 1px;
+}
+.type-list {
+    display: flex;
+    flex-direction: column;
+    border-left: groove #757575 3px;
+    flex: 1;
+}
+.type-box {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-evenly;
+    background: linear-gradient(14deg, #afafaf 50%, #ffffff 80%, #afafaf 90%);
+    border-top: groove #757575 3px;
+}
+.stats {
+    width: 150px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 5px;
+    flex: 1;
+}
+.stat-line {
+    font-size: 17px;
+    text-transform: capitalize;
+}
+.panel-evo {
+    flex-wrap: wrap;
+}
+.empty-evo {
+    background: linear-gradient(15deg, #83887b 64%, #8b8f81 70%, #8b8f81 81%, #babfb1 86%, #8b8f81 89%, #8b8f81 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.poke-ball {
+    border: solid black 4px;
+    background: black;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    align-items: center;
+    position: relative;
+    opacity: 0.8;
+}
+.poke-ball-top {
+    background: #83887a;
+    flex: 1;
+    width: 100%;
+    opacity: 0.3;
+}
+.poke-ball-center {
+    display: flex;
+    width: 22px;
+    height: 22px;
+    border: solid black 4px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 10px;
+}
+.poke-ball-dot {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    background: black;
+    border: solid #83887a 6px;
+}
+.poke-ball-bottom {
+    background: #83887a;
+    flex: 1;
+    width: 100%;
+}
+.evo-header {
+    width: 100%;
+    /* background: linear-gradient(14deg, #460f0f 0, #891313 30%, #b31818 45%, #fd5555 65%, #b31818 95%);
+    border: groove #e61515 3px;
+    border-width: 5px 0;
+    text-shadow: #fd5555 -1px 1px; */
+    margin-bottom: 2px;
+}
+.evo-num {
+    /* padding: 2px;
+    font-size: 16px;
+    font-weight: bold;
+    background-blend-mode: color-dodge;
+    background: linear-gradient(
+        15deg,
+        rgba(128, 128, 128, 0.5) 64%,
+        rgba(138, 138, 138, 0.5) 70%,
+        rgba(230, 230, 230, 0.5) 81%,
+        rgba(255, 255, 255, 0.5) 86%,
+        rgba(220, 220, 220, 0.5) 89%,
+        rgba(230, 230, 230, 0.5) 100%
+    );
+    background-color: #3a3b38;
+    border-radius: 13px;
+    border-color: #888888;
+    text-shadow: #888888 -1px 1px;
+    width: 50%; */
+    font-family: "Staatliches", cursive;
+    font-size: 1.25em;
+    letter-spacing: 2px;
+    background: transparent;
+    border: none;
+    text-shadow: #e78181 -1px 1px;
+}
+.evo-name {
+    width: auto;
+    padding: 3px;
+    margin-bottom: 3px;
+    text-align: right;
+}
+.blue-buttons {
+    flex-wrap: wrap;
+    padding: 5px;
+}
+.blue-button {
+    height: 30px;
+    flex: 1 1 16%;
+    margin: 3px;
+    border: groove #6c96e6 3px;
+    border-radius: 5px;
+    background: linear-gradient(
+        15deg,
+        rgba(128, 128, 128, 0.5) 64%,
+        rgba(138, 138, 138, 0.5) 70%,
+        rgba(230, 230, 230, 0.5) 81%,
+        rgba(255, 255, 255, 0.5) 86%,
+        rgba(220, 220, 220, 0.5) 89%,
+        rgba(230, 230, 230, 0.5) 100%
+    );
+    background-blend-mode: hard-light;
+    background-color: #09a8ff;
+}
+.move-list {
+    display: flex;
+}
+.move-screen {
+    margin: 3px;
+    padding: 10px 20px;
+    flex: 1;
+}
+.move-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 3px;
+}
+.move-name {
+    font-size: 24px;
+    border-bottom: solid black 2px;
+    /* padding: 0 5px; */
+    margin-bottom: 3px;
+    text-align: center;
+    text-transform: capitalize;
+}
+.move-type {
+    font-size: 18px;
+    text-transform: uppercase;
+    border: solid black 2px;
+    border-radius: 7px;
+    padding: 2px 10px;
+    text-align: center;
+}
+.move-body {
+    display: flex;
+    justify-content: space-between;
+}
+.move-learn {
+    /* font-size: 20px; */
+    float: right;
+    margin-right: 3px;
+}
+.move-status {
+    text-transform: capitalize;
+    margin-right: 3px;
+    margin-top: 3px;
+}
+.move-controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 0 10px 0 7px;
+}
+.move-arrow {
+    height: 40px;
+    width: 40px;
+    font-size: 37px;
+    border: groove grey 3px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-shadow: #e78181 -1px 1px;
+    cursor: pointer;
+    transform: rotate(60deg);
+}
+.move-arrow > * {
+    transform: rotate(-60deg);
+}
+.move-arrow:first-child > * {
+    padding-bottom: 5px;
+}
+.move-arrow:last-child > * {
+    padding-top: 1px;
+}
+.move-arrow:hover {
+    border-color: rgb(184, 237, 124);
+}
+.move-arrow:active {
+    border-color: rgb(244, 252, 185);
+}
+.down-arrow {
+    background: yellow;
+}
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.controls {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+}
+.button {
+    padding: 5px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: outset rgb(248, 187, 187) 6px;
+    transform: rotate(60deg);
+    background: radial-gradient(
+        circle farthest-corner at 40% 25%,
+        rgb(218, 237, 241) 9%,
+        rgb(124, 214, 237) 20%,
+        rgb(64, 90, 165) 62%,
+        rgb(43, 125, 196) 100%
+    );
+    cursor: pointer;
+}
+.button:hover {
+    background: radial-gradient(
+        circle farthest-corner at 40% 25%,
+        rgb(233, 241, 218) 9%,
+        rgb(184, 237, 124) 20%,
+        rgb(64, 165, 106) 62%,
+        rgb(43, 196, 145) 100%
+    );
+}
+.button:active {
+    background: radial-gradient(
+        circle farthest-corner at 40% 25%,
+        rgb(229, 255, 181) 9%,
+        rgb(204, 237, 124) 20%,
+        rgb(103, 165, 64) 62%,
+        rgb(66, 204, 40) 100%
+    );
+}
+.button::after {
+    border: groove #460f0f 5px;
+    content: "";
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    border-radius: 50%;
+    left: -10px;
+    top: -10px;
+    border-style: double;
+    opacity: 0.75;
+}
+.prev {
+    border-right: 30px solid white;
+}
+.num {
+    color: blue;
+}
+.next {
+    border-left: 30px solid white;
+}
+.num-input {
+    width: 50px;
+    font-size: 20px;
+    height: 30px;
+    text-align: right;
+    align-self: center;
+}
+
+.submit {
+    width: 66px;
+    height: 18px;
+
+    border: groove #5f845e 3px;
+    background-color: #5ed75e;
+    border-radius: 20px;
+    box-sizing: border-box;
+    margin-top: 3px;
+    cursor: pointer;
+}
+.submit:hover {
+    border-color: #85ec4d;
+}
+
+.normal {
+    background-color: #bfbfbf;
+}
+.fighting {
+    background-color: #d87c58;
+}
+.flying {
+    background-color: #999ade;
+}
+.poison {
+    background-color: #925192;
+}
+.ground {
+    background-color: #dea761;
+}
+.rock {
+    background-color: #897864;
+}
+.bug {
+    background-color: #b1c967;
+}
+.ghost {
+    background-color: #c195dc;
+}
+.steel {
+    background-color: #49769c;
+}
+.fire {
+    background-color: #cf1414;
+}
+.water {
+    background-color: #1689de;
+}
+.grass {
+    background-color: #47a047;
+}
+.electric {
+    background-color: #e6b700;
+}
+.psychic {
+    background-color: #fa43b8;
+}
+.ice {
+    background-color: #98c3de;
+}
+.dragon {
+    background-color: #89315d;
+}
+.dark {
+    background-color: #282433;
+}
+.fairy {
+    background-color: #dca0ce;
+}
+.unknown {
+    background-color: #545454;
+}
+.shadow {
+    background-color: #364163;
+}
+
+  </style>
+
+</head>
+<body>
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="theme-color" content="#000000" />
+
+        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+        <title>Pokedex</title>
+        <link href="https://fonts.googleapis.com/css?family=Squada+One|Staatliches|VT323" rel="stylesheet" />
+        <link
+            rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.6.3/css/all.css"
+            integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/"
+            crossorigin="anonymous"
+        />
+    </head>
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="root"></div>
+    </body>
+</html>
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/react/16.7.0/umd/react.production.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.7.0/umd/react-dom.production.min.js'></script><script type="module" >
+// Author Developer Rahul
+
+// import React from "react";
+// import ReactDOM from "react-dom";
+// import "./index.css";
+
+const POKEMON = 1;
+
+function pickRandom(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function padStats(stat, val, sep, len) {
+    val = val || "xx";
+    let output = `
+    ${stat.toString()}${sep.repeat(len - (val.toString().length + stat.toString().length))}${val.toString()}`;
+    return output;
+}
+
+class Pokedex extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            requestRoot: "https://pokeapi.co/api/v2/pokemon/",
+            pokemonIndex: POKEMON,
+            pokemonData: {},
+            pokemonDescription: "",
+            speciesData: {},
+            evoSprites: [],
+            evoNames: [],
+            moves: [],
+            loading: false
+        };
+        this.nextPokemon = this.nextPokemon.bind(this);
+        this.previousPokemon = this.previousPokemon.bind(this);
+        this.pickPokemon = this.pickPokemon.bind(this);
+    }
+
+    nextPokemon() {
+        const next = Math.min(this.state.pokemonIndex + 1, 949);
+        this.setState({ pokemonIndex: next }, this.changePokemon);
+    }
+
+    previousPokemon() {
+        const prev = Math.max(this.state.pokemonIndex - 1, 1);
+        this.setState({ pokemonIndex: prev }, this.changePokemon);
+    }
+
+    pickPokemon(no) {
+        this.setState({ pokemonIndex: no }, this.changePokemon);
+    }
+
+    componentDidMount() {
+        this.changePokemon();
+    }
+
+    changePokemon() {
+        this.setState({ loading: true });
+        const request = `${this.state.requestRoot}${this.state.pokemonIndex}/`;
+        fetch(request, {
+            cache: "force-cache"
+        })
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    pokemonData: data,
+                    pokemonIndex: data.id
+                });
+                const speciesRequest = data.species.url;
+                return fetch(speciesRequest);
+            })
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    speciesData: data,
+
+                    description: pickRandom(
+                        data.flavor_text_entries.filter(e => e.language.name === "en").map(e => e.flavor_text)
+                    ),
+
+                    loading: false
+                });
+                const evo_chain = data.evolution_chain.url;
+                fetch(evo_chain)
+                    .then(response => response.json())
+                    .then(data => {
+                        const api = "https://pokeapi.co/api/v2/pokemon/";
+                        const first = data.chain;
+                        let second;
+                        let third;
+                        let evos = [];
+                        if (first) {
+                            const e1 = fetch(`${api}${first.species.name}/`);
+                            evos.push(e1);
+                            second = first.evolves_to[0];
+                        }
+                        if (second) {
+                            const e2 = fetch(`${api}${second.species.name}/`);
+                            third = second.evolves_to[0];
+
+                            evos.push(e2);
+                        }
+                        if (third) {
+                            const e3 = fetch(`${api}${third.species.name}/`);
+                            evos.push(e3);
+                        }
+                        Promise.all(evos)
+                            .then(responses => Promise.all(responses.map(value => value.json())))
+                            .then(dataList => {
+                                const sprites = dataList.map(v => v.sprites.front_default);
+                                const names = dataList.map(n => n.name);
+                                this.setState({ evoSprites: sprites, evoNames: names });
+                            });
+                    });
+            });
+    }
+
+    render() {
+        const pData = this.state.pokemonData;
+        const sData = this.state.speciesData;
+
+        return (
+            <div className="pokedex">
+                <LeftPanel
+                    pData={pData}
+                    sData={sData}
+                    no={this.state.pokemonIndex}
+                    description={this.state.description}
+                />
+                <Divider />
+                <RightPanel
+                    pData={pData}
+                    sData={sData}
+                    evoSprites={this.state.evoSprites}
+                    evoNames={this.state.evoNames}
+                    controls={{ next: this.nextPokemon, prev: this.previousPokemon, pick: this.pickPokemon }}
+                    no={this.state.pokemonIndex}
+                />
+                {/* <TypeList /> */}
+            </div>
+        );
+    }
+}
+
+function LeftPanel(props) {
+    const pData = props.pData;
+
+    if (typeof pData === "object" && Object.keys(pData).length !== 0) {
+        return (
+            <div className="panel left-panel">
+                <PokemonName name={pData.name} no={props.no} />
+                <PokemonSprite src={pData.sprites} />
+                <PokemonDescription description={props.description} no={props.no} />
+            </div>
+        );
+    } else {
+        return Loading();
+    }
+}
+
+function PokemonName(props) {
+    return (
+        <div className="pokemon-name screen">
+            {props.name}
+            <span className="name-no">no. {props.no}</span>
+        </div>
+    );
+}
+
+class PokemonSprite extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            front: true,
+            shiny: false,
+            female: false
+        };
+
+        this.toggleGender = this.toggleGender.bind(this);
+        this.toggleShiny = this.toggleShiny.bind(this);
+        this.toggleFront = this.toggleFront.bind(this);
+    }
+
+    buildImage() {
+        const dir = this.state.front ? "front" : "back";
+        const gender = this.state.female ? "_female" : "";
+        const shiny = this.state.shiny ? "_shiny" : "_default";
+        // console.log(dir + shiny + gender);
+        return dir + shiny + gender;
+    }
+
+    toggleGender() {
+        // console.log("toggling gender");
+        this.setState({ female: !this.state.female }, () => {
+            if (this.props.src[this.buildImage()]) {
+                return;
+            } else {
+                this.setState({ female: false });
+            }
+        });
+    }
+
+    toggleShiny() {
+        // console.log("toggling shiny");
+        this.setState({ shiny: !this.state.shiny }, () => {
+            if (this.props.src[this.buildImage()]) {
+                return;
+            } else {
+                this.setState({ shiny: false });
+            }
+        });
+    }
+
+    toggleFront() {
+        // console.log("toggling front");
+        this.setState({ front: !this.state.front }, () => {
+            if (this.props.src[this.buildImage()]) {
+                return;
+            } else {
+                this.setState({ front: false });
+            }
+        });
+    }
+
+    render() {
+        const imgSrc = this.props.src[this.buildImage()] || this.props.src["front_default"];
+        const funcs = { gender: this.toggleGender, front: this.toggleFront, shiny: this.toggleShiny };
+        return (
+            <div>
+                <img src={imgSrc} alt="pokemon" className="pokemon-sprite" />
+                <SpriteControls
+                    funcs={funcs}
+                    gender={this.state.female}
+                    shiny={this.state.shiny}
+                    front={this.state.front}
+                />
+            </div>
+        );
+    }
+}
+
+function SpriteControls(props) {
+    return (
+        <div className="sprite-controls">
+            <div
+                className={"sprite-control sprite-controls-gender " + (props.gender ? "sprite-control-selected" : "")}
+                onClick={props.funcs.gender}
+            >
+                <i className="fas fa-venus" />
+            </div>
+            <div
+                className={"sprite-control sprite-controls-shiny " + (props.shiny ? "sprite-control-selected" : "")}
+                onClick={props.funcs.shiny}
+            >
+                <span>shiny</span>
+            </div>
+            <div
+                className={"sprite-control sprite-controls-rotate " + (!props.front ? "sprite-control-selected" : "")}
+                onClick={props.funcs.front}
+            >
+                <i className="fas fa-undo" />
+            </div>
+        </div>
+    );
+}
+
+function PokemonDescription(props) {
+    return <div className="pokemon-description screen">{props.description}</div>;
+}
+
+// class PokemonSpriteAnimated extends React.Component {
+//     constructor(props) {
+//         super(props);
+
+//         const sprites = Object.keys(props.sprites)
+//             .map(sprite => props.sprites[sprite])
+//             .filter(url => url);
+
+//         this.state = {
+//             sprites: sprites,
+//             index: 0
+//         };
+//     }
+
+//     render() {
+//         const index = this.state.index;
+//         const sprites = this.state.sprites;
+//         setTimeout(() => this.setState({ index: (index + 1) % sprites.length }), 1000);
+
+//         return <PokemonSprite src={sprites[index]} />;
+//     }
+// }
+
+function Divider(props) {
+    return (
+        <div className="divider">
+            <div className="gap" />
+            <div className="hinge" />
+            <div className="gap" />
+            <div className="hinge" />
+            <div className="gap" />
+            <div className="hinge" />
+            <div className="gap" />
+        </div>
+    );
+}
+
+function RightPanel(props) {
+    const types = props.pData.types;
+    const stats = props.pData.stats;
+    const moves = props.pData.moves;
+
+    if (types) {
+        return (
+            <div className="panel right-panel">
+                <div className="panel-row">
+                    <PokemonStats stats={stats} />
+                    <PokemonType types={types} />
+                </div>
+
+                <PokemonEvolution evoSprites={props.evoSprites} evoNames={props.evoNames} />
+                <ButtonChrome />
+                <MoveList moves={moves} />
+                <PokedexControls controls={props.controls} no={props.no} />
+            </div>
+        );
+    } else {
+        return Loading();
+    }
+}
+
+function PokemonStats(props) {
+    const stats = props.stats;
+    return (
+        <div className="screen stats">
+            {stats.map(s => {
+                const name = s.stat.name;
+                const value = s.base_stat;
+
+                return <StatLine name={name} value={value} key={name} />;
+            })}
+        </div>
+    );
+}
+
+function StatLine(props) {
+    return (
+        <div className="stat-line">
+            {padStats(props.name, props.value, ".", 20)}
+            {/* <span>{props.name}</span>
+      {".".repeat(20 - props.name.length)}
+      <span>{props.value}</span> */}
+        </div>
+    );
+}
+
+function PokemonType(props) {
+    const types = props.types;
+    return (
+        <div className="type-list">
+            <div className="panel-header">Types</div>
+            <div className="type-box">
+                {types.map(t => {
+                    const type = t.type.name;
+                    return <Type type={type} key={type} />;
+                })}
+            </div>
+            {/* <div className="panel-header">Evolutions</div> */}
+        </div>
+    );
+}
+
+function PokemonEvolution(props) {
+    const e1 = props.evoSprites[0];
+    const e2 = props.evoSprites[1];
+    const e3 = props.evoSprites[2];
+    const n1 = props.evoNames[0];
+    const n2 = props.evoNames[1];
+    const n3 = props.evoNames[2];
+
+    return (
+        <div className="panel-row panel-evo">
+            {/* <div className="panel-header evo-header">Evolutions</div> */}
+            <PokemonSpriteSmall src={e1} evo="I" name={n1} />
+            <PokemonSpriteSmall src={e2} evo="II" name={n2} />
+            <PokemonSpriteSmall src={e3} evo="III" name={n3} />
+        </div>
+    );
+}
+
+function PokemonSpriteSmall(props) {
+    let evoImage;
+
+    if (props.src) {
+        evoImage = <img src={props.src} alt="pokemon" className="pokemon-sprite pokemon-sprite-small" />;
+    } else {
+        evoImage = <PokeBall />;
+    }
+
+    return (
+        <div>
+            <div className="flex-center">
+                <div className="evo-num">{props.evo}</div>
+            </div>
+            {evoImage}
+            <div className="screen evo-name">{props.name || "No Data"}</div>
+        </div>
+    );
+}
+
+function PokeBall(props) {
+    return (
+        <div className="pokemon-sprite pokemon-sprite-small empty-evo">
+            <div className="poke-ball">
+                <div className="poke-ball-top" />
+                <div className="poke-ball-center">
+                    <div className="poke-ball-dot" />
+                </div>
+                <div className="poke-ball-bottom" />
+            </div>
+        </div>
+    );
+}
+
+function ButtonChrome(props) {
+    return (
+        <div className="panel-row blue-buttons">
+            <div className="blue-button" />
+            <div className="blue-button" />
+            <div className="blue-button" />
+            <div className="blue-button" />
+            <div className="blue-button" />
+            <div className="blue-button" />
+            <div className="blue-button" />
+            <div className="blue-button" />
+            <div className="blue-button" />
+            <div className="blue-button" />
+        </div>
+    );
+}
+class MoveList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            index: 0,
+            currentMove: {},
+            loading: false
+        };
+        this.nextMove = this.nextMove.bind(this);
+        this.prevMove = this.prevMove.bind(this);
+    }
+
+    componentDidMount() {
+        // console.log(this.props.moves[0].move.name);
+        this.loadMoves();
+    }
+
+    loadMoves() {
+        this.setState({ loading: true, index: this.state.index }, () => {
+            fetch(this.props.moves[this.state.index].move.url)
+                .then(response => response.json())
+                .then(data => {
+                    this.setState({ currentMove: data, loading: false });
+                });
+        });
+    }
+
+    componentDidUpdate(prevProps) {
+        // Typical usage (don't forget to compare props):
+        if (this.props.moves !== prevProps.moves) {
+            this.setState({ index: 0 }, this.loadMoves);
+        }
+    }
+
+    nextMove() {
+        const nextIndex = Math.min(this.state.index + 1, this.props.moves.length - 1);
+        this.setState({ index: nextIndex }, this.loadMoves);
+    }
+
+    prevMove() {
+        const nextIndex = Math.max(this.state.index - 1, 0);
+        this.setState({ index: nextIndex }, this.loadMoves);
+    }
+
+    render() {
+        let moves;
+        // let cur_move = this.props.moves[this.state.index];
+        if (this.state.loading || Object.keys(this.state.currentMove).length === 0) {
+            moves = <MovesLoading />;
+        } else {
+            const lvl = this.props.moves[this.state.index].version_group_details[0].level_learned_at;
+            moves = <MoveEntry move={this.state.currentMove} lvl={lvl} />;
+        }
+
+        return (
+            <div className="move-list">
+                {moves}
+                <div className="move-controls">
+                    <div className="move-arrow" onClick={this.prevMove}>
+                        <i className="fas fa-caret-up" />
+                    </div>
+                    <div className="move-arrow" onClick={this.nextMove}>
+                        <i className="fas fa-caret-down" />
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+function MovesLoading() {
+    return (
+        <div className="move-body move-screen screen">
+            <div className="move-left">
+                <div className="move-name" style={{ textTransform: "none" }}>
+                    xxxxx xxxxx
+                </div>
+                <div className="move-stat">{padStats("Accuracy", "xx", ".", 16)}</div>
+                <div className="move-stat">{padStats("Power", "xx", ".", 16)}</div>
+                <div className="move-stat">{padStats("PP", "xx", ".", 16)}</div>
+            </div>
+            <div className="move-right">
+                <div className="move-type">Type: xxxxx</div>
+                {/* <div className="move-status">Status Effect: {status}</div> */}
+                <div className="move-learn">Learn: Lvl xx</div>
+            </div>
+        </div>
+    );
+}
+
+function MoveEntry(props) {
+    const move = props.move;
+    const name = move.name || move.names.filter(m => m.language.name === "en")[0].name;
+    const acc = move.accuracy;
+    const pow = move.power;
+    const pp = move.pp;
+    const type = move.type.name;
+    //   const status = "" || "---";˝
+    const lvl = props.lvl;
+    // console.log("move ", move);
+    return (
+        <div className="move-body move-screen screen">
+            <div className="move-left">
+                <div className="move-name">{name}</div>
+                <div className="move-stat">{padStats("Accuracy", acc, ".", 16)}</div>
+                <div className="move-stat">{padStats("Power", pow, ".", 16)}</div>
+                <div className="move-stat">{padStats("PP", pp, ".", 16)}</div>
+            </div>
+            <div className="move-right">
+                <div className="move-type">Type: {type}</div>
+                {/* <div className="move-status">Status Effect: {status}</div> */}
+                <div className="move-learn">Learn: Lvl {lvl}</div>
+            </div>
+        </div>
+    );
+}
+
+function PokedexControls(props) {
+    return (
+        <div className="panel-row controls">
+            <Button dir="left" onClick={props.controls.prev} />
+            <NumInput no={props.no} func={props.controls.pick} />
+            <Button dir="right" onClick={props.controls.next} />
+        </div>
+    );
+}
+
+function Button(props) {
+    return <div className="button" onClick={props.onClick} />;
+}
+
+class NumInput extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            id: 1
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleChange(e) {
+        e.preventDefault();
+        this.setState({ id: e.target.value });
+    }
+
+    handleClick(e) {
+        e.preventDefault();
+        this.props.func(this.state.id);
+    }
+
+    render() {
+        return (
+            <div>
+                <input
+                    type="number"
+                    className="screen num-input"
+                    placeholder={this.props.no}
+                    onChange={this.handleChange}
+                />
+                <div className="submit" onClick={this.handleClick} />
+            </div>
+        );
+    }
+}
+
+function Loading() {
+    return <h1>LOADING...</h1>;
+}
+
+function Type(props) {
+    return <div className={"type " + props.type}>{props.type}</div>;
+}
+
+ReactDOM.render(<Pokedex />, document.getElementById("root"));
+
+// class TypeList extends React.Component {
+//     constructor(props) {
+//         super(props);
+//         this.state = {
+//             loading: false,
+//             data: []
+//         };
+//     }
+
+//     componentDidMount() {
+//         this.setState({ loading: true });
+
+//         let request = "https://pokeapi.co/api/v2/type/";
+
+//         fetch(request)
+//             .then(response => response.json())
+//             .then(data => this.setState({ data: data.results, loading: false }));
+//     }
+
+//     render() {
+//         return (
+//             <div className="type-list">
+//                 {this.state.loading ? (
+//                     <Loading />
+//                 ) : (
+//                     this.state.data.map(d => {
+//                         return <Type type={d.name} key={d.name} />;
+//                     })
+//                 )}
+//             </div>
+//         );
+//     }
+// }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Zeyada&display=swap');
+
+body{
+    background-image:url(images.jpeg);
+}
+
+p{
+    font-family: Edwardian Script ITC;
+    font-size: px;
+}
+
+.paper-img{
+    border: 10px;
+    border-color: black;
+}

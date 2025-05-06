@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <!--unused link for image-->
+  <link rel='icon' type='image/png' sizes='16x16'
+    href='https://raw.githubusercontent.com/Techno-san/Wishing-Card/main/Image/icon.png'>
+  <title>CodePen - Deepa-Crush</title>
+  <!-- Main css -->
+  <style>
+    /* css code is here */
+    @import url("https://fonts.googleapis.com/css2?family=Caveat");
+
+    html,
+    body {
+      width: 1400px;
+      height: 2088px;
+      /* for touch screen */
+      touch-action: none;
+      margin: 0;
+      font-family: 'Caveat', serif;
+      overflow: hidden;
+      background-color: rgb(255, 255, 255);
+      position: absolute;
+      top:0%;
+      left: 0%;
+  
+    }
+
+
+    .Container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: scale(1.1);
+
+      display: flex;
+      align-items: center;
+      width: 1400px;
+      height: 2088px;
+      background-color: rgb(255, 255, 255);
+      /* background-color: lightblue; */
+      padding: 12px 24px;
+      font-size: 2.25rem;
+      text-align: center;
+
+    }
+
+    .Picture {
+      display: inline-block;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      border: 5px solid #fff;
+      border-radius: 3px;
+      background: #fff;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      transform: translate(-50%, -50%);
+      user-select: none;
+      cursor: pointer;
+    }
+
+    .Picture-video {
+      display: inline-block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      border: 5px solid #fff;
+      border-radius: 3px;
+      background: #fff;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      transform: translate(-50%, -50%);
+      user-select: none;
+      cursor: pointer;
+    }
+
+    .Picture-img {
+      display: block;
+      width: 500px;
+      height: 500px;
+      pointer-events: none;
+    }
+
+    .Picture-note {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 500px;
+      height: 105px;
+      padding: 12px 24px;
+      font-size: 2.9rem;
+      text-align: center;
+    }
+
+    .Picture-note-video {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 450px;
+      height: 105px;
+      padding: 12px 24px;
+      font-size: 2.25rem;
+      text-align: center;
+    }
+
+    .Network {
+      display: inline-block;
+      padding: 0 5px;
+    }
+
+    .Network-video {
+      display: inline-block;
+      padding: 0 5px;
+    }
+
+    .Network img {
+      width: 1.5rem;
+      aspect-ratio: 1 / 1;
+      vertical-align: middle;
+    }
+
+    .Network-video img {
+      width: 1.5rem;
+      aspect-ratio: 1 / 1;
+      vertical-align: middle;
+    }
+
+    /* --------------------- */
+    /* Other styles          */
+    /* --------------------- */
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    a {
+      text-decoration: none;
+      color: black;
+      cursor: hand;
+      pointer-events: all;
+    }
+  </style>
+</head>
+
+<body>
+  <!--add audio -->
+  <!-- change music -->
+  <audio class="audio" hidden autoplay src="https://audio.jukehost.co.uk/fW3ddkz2XwruHbWWc8j7cw2spYSH3PPz">
+  </audio>
+    <!-- partial:index.partial.html -->
+    <div class="Container">
+      <!-- last card -->
+      <div class="Picture-video" id="video">
+        <img class="Picture-img-video" width="400" height="400" style="
+          padding: 40px;" src="https://cdn.pixabay.com/photo/2016/03/31/19/25/cartoon-1294994__340.png" frameborder="0"
+          allowfullscreen>
+        <div class="Picture-note-video">
+          <span>@Techno-san</span> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+          <span><a href="https://techno-san.github.io/Crush-in-my-heart/"><b>Next ></b></a></span>
+        </div>
+      </div>
+      <!-- other cards -->
+      <div class="Picture">
+        <a href="https://youtu.be/D6vG9zrg_HA?si=QH6Fu_X5NtMgVN6x"><img class="Picture-img"
+            src="https://raw.githubusercontent.com/Techno-san/Deepa-Crush/main/Image/image10.jpg" alt="" /></a>
+        <div class="Picture-note"><span>let's watch a romantic movie and fall in love again.Click image. </span>
+        </div>
+      </div>
+
+      <div class="Picture">
+        <img class="Picture-img" src="https://raw.githubusercontent.com/Techno-san/Deepa-Crush/main/Image/image8.jpg"
+          alt="" />
+        <div class="Picture-note"><span>Please come back and stay with me.</span></div>
+      </div>
+      <div class="Picture">
+        <img class="Picture-img" src="https://raw.githubusercontent.com/Techno-san/Deepa-Crush/main/Image/image9.jpg"
+          alt="" />
+        <div class="Picture-note"><span> love you...</span></div>
+      </div>
+      <div class="Picture">
+        <img class="Picture-img" src="https://raw.githubusercontent.com/Techno-san/Deepa-Crush/main/Image/image7.jpg"
+          alt="" />
+        <div class="Picture-note"><span>I wish you nothing but the best moving forward.</span></div>
+      </div>
+      <div class="Picture">
+        <img class="Picture-img" src="https://raw.githubusercontent.com/Techno-san/Deepa-Crush/main/Image/image6.jpg"
+          alt="" />
+        <div class="Picture-note"><span>I am crazy about you.</span></div>
+      </div>
+      <div class="Picture">
+        <img class="Picture-img" src="https://raw.githubusercontent.com/Techno-san/Deepa-Crush/main/Image/image5.jpg"
+          alt="" />
+        <div class="Picture-note"><span>Let's talk about it.</span></div>
+      </div>
+      <div class="Picture">
+        <img class="Picture-img" src="https://raw.githubusercontent.com/Techno-san/Deepa-Crush/main/Image/image4.jpg"
+          alt="" />
+        <div class="Picture-note"><span>I think ,Our life is great with together</span></div>
+      </div>
+      <div class="Picture">
+        <img class="Picture-img" src="https://raw.githubusercontent.com/Techno-san/Deepa-Crush/main/Image/image3.jpg"
+          alt="" />
+        <div class="Picture-note"><span>Think again </span></div>
+      </div>
+      <div class="Picture">
+        <img class="Picture-img" src="https://raw.githubusercontent.com/Techno-san/Deepa-Crush/main/Image/image1.jpg"
+          alt="" />
+        <div class="Picture-note"><span>Give us another chance</span></div>
+      </div>
+      <div class="Picture">
+        <img class="Picture-img" src="https://raw.githubusercontent.com/Techno-san/Deepa-Crush/main/Image/image2.jpg"
+          alt="" />
+        <div class="Picture-note"><span>Please stay</span></div>
+      </div>
+    </div>
+  <!-- partial -->
+  <script>
+    const pictures = document.querySelectorAll('.Picture');
+    var previousTouch = undefined;
+
+    function updateElementPosition(element, event) {
+      var movementX, movementY;
+
+      if (event.type === 'touchmove') {
+        const touch = event.touches[0];
+        movementX = previousTouch ? touch.clientX - previousTouch.clientX : 0;
+        movementY = previousTouch ? touch.clientY - previousTouch.clientY : 0;
+        console.log('touch', { movementX: movementX, newX: touch.clientX, oldX: previousTouch && previousTouch.clientX });
+        previousTouch = touch;
+      } else {
+        movementX = event.movementX;
+        movementY = event.movementY;
+      }
+
+      const elementY = parseInt(element.style.top || 0) + movementY;
+      const elementX = parseInt(element.style.left || 0) + movementX;
+
+      element.style.top = elementY + "px";
+      element.style.left = elementX + "px";
+    }
+
+    function startDrag(element, event) {
+
+      const updateFunction = (event) => updateElementPosition(element, event);
+      const stopFunction = () => stopDrag({ update: updateFunction, stop: stopFunction });
+      document.addEventListener("mousemove", updateFunction);
+      document.addEventListener("touchmove", updateFunction);
+      document.addEventListener("mouseup", stopFunction);
+      document.addEventListener("touchend", stopFunction);
+
+    }
+
+    function stopDrag(functions) {
+      previousTouch = undefined;
+      document.removeEventListener("mousemove", functions.update);
+      document.removeEventListener("touchmove", functions.update);
+      document.removeEventListener("mouseup", functions.stop);
+      document.removeEventListener("touchend", functions.stop);
+    }
+
+    pictures.forEach(picture => {
+      const range = 100;
+      const randomX = Math.random() * (range * 2) - range;
+      const randomY = Math.random() * (range * 2) - range;
+      const randomRotate = Math.random() * (range / 2) - range / 4;
+      const startFunction = (event) => startDrag(picture, event);
+      picture.style.top = `${randomY}px`;
+      picture.style.left = `${randomX}px`;
+      picture.style.transform = `translate(-50%, -50%) rotate(${randomRotate}deg)`;
+      picture.addEventListener("mousedown", startFunction);
+      picture.addEventListener("touchstart", startFunction);
+    });
+  </script>
+
+</body>
+
+</html>

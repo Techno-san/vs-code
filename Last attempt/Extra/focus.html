@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Ohio Progress Bar</title>
+  <style>
+* {
+	border: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+:root {
+	--bg: #e3e4e8;
+	--fg: #17181c;
+	font-size: calc(16px + (24 - 16) * (100vw - 320px) / (1280 - 320))
+}
+body {
+	background: var(--bg);
+	color: var(--fg);
+	display: grid;
+	font: 1em/1.5 "B612 Mono", monospace;
+	height: 100vh;
+	overflow: hidden;
+	place-items: center;
+}
+.pb {
+	--value: 0;
+	position: relative;
+	width: 15em;
+}
+.pb__fill, .pb__wrap, .pb__track {
+	width: 100%;
+}
+.pb__fill, .pb__wrap {
+	transition: transform 0.025s linear;
+}
+.pb__fill, .pb__track {
+	height: 1.5em;
+}
+.pb__fill {
+	background:#f272ea;
+	/* background: #f3c623; */
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	transform: scaleX(var(--value));
+	transform-origin: 0 50%;
+}
+.pb__wrap {
+	transform: translateX(calc(100% * var(--value)));
+}
+.pb__value {
+	font-size: 2em;
+	text-align: center;
+	transform-origin: 50% 4.5rem;
+}
+.pb__track {
+    background: currentColor;
+	opacity: 0.15;
+	transform-origin: 50% 1.5em;
+}
+.pb--resetting .pb__fill,
+.pb--resetting .pb__wrap {
+	transition-duration: 0s;
+}
+.pb__wrap--falling .pb__value,
+.pb__wrap--falling .pb__track {
+	opacity: 0;
+	transform: translateY(10rem) rotate(80deg);
+	transition: all 1.5s ease-in;
+}
+
+/* Dark theme */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--bg: #17181c;
+		--fg: #e3e4e8;
+	}
+}
+</style>
+</head>
+
+  <body>
+    <h1>Progress Bar</h1>
+    <div class="pb">
+      <div class="pb__fill"></div>
+      <div class="pb__wrap">
+        <div class="pb__value">0%</div>
+        <div class="pb__track"></div>
+      </div>
+    </div>
+  </body>
+  </html>
+  <!-- partial -->
+  <script>
+  document.addEventListener("DOMContentLoaded",() => {
+	const pb = new ProgressBar(".pb");
+});
+
+class ProgressBar {
+	constructor(el) {
+		this.value = 0;
+		this.loop = true;
+		this.el = document.querySelector(el);
+		this.wrapEl = document.querySelector(".pb__wrap");
+		this.valueEl = document.querySelector(".pb__value");
+
+		setTimeout(this.run.bind(this),500);
+	}
+	inc(amount) {
+		this.value += amount;
+
+		if (this.value > 1)
+			this.value = 1;
+		// update the CSS variable
+		if (this.el)
+			this.el.style.setProperty("--value",this.value);
+		// wrapper
+		if (this.wrapEl) {
+			// add the class if more than halfway off the edge
+			let wrapCL = this.wrapEl.classList,
+				fallingClass = "pb__wrap--falling";
+
+			if (this.value > 0.5 && !wrapCL.contains(fallingClass))
+				wrapCL.add(fallingClass);
+		}
+		// update the percentage value
+		if (this.valueEl) {
+			let displayValue = +(this.value * 100).toFixed(2);
+			this.valueEl.textContent = `${displayValue}%`;
+		}
+	}
+	reset() {
+		this.value = 0;
+		// reset the CSS variable, skip transitions
+		if (this.el) {
+			this.el.style.setProperty("--value",this.value);
+			this.el.classList.add("pb--resetting");
+		}
+		// remove the “falling” class
+		if (this.wrapEl)
+			this.wrapEl.classList.remove("pb__wrap--falling");
+		// percentage value
+		if (this.valueEl)
+			this.valueEl.textContent = `${this.value}%`;
+	}
+	run() {
+		let incAmount = 0.01,
+			interval = 0.025 * 1e3;
+
+		if (this.value < 1) {
+			this.el.classList.remove("pb--resetting");
+			this.inc(incAmount);
+			setTimeout(this.run.bind(this),interval);
+
+		} else if (this.loop) {
+			setTimeout(this.reset.bind(this),1000);
+			setTimeout(this.run.bind(this),1500);
+		}
+	}
+}
+
+  </script>
+</body>
+
+</html>

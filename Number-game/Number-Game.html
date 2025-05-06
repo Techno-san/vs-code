@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Game</title>
+    <style>
+        /* styles.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    width: 350px;
+    text-align: center;
+    border: 2px solid #ddd;
+    background: #f4f4f9;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+h1::after {
+    content: "";
+    display: block;
+    width: 50%;
+    height: 2px;
+    background-color: #74ebd5;
+    margin: 10px auto;
+}
+
+.player {
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+input[type="number"], input[type="range"], input[type="text"] {
+    width: 80%;
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+input[type="range"] {
+    width: 100%;
+    margin-top: 10px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#playBtn, #nextGameBtn {
+    background-color: #ff9800;
+    margin-top: 20px;
+}
+
+#nextGameBtn {
+    background-color: #ff9800;
+}
+
+#nextGameBtn:hover {
+    background-color: #fb8c00;
+}
+
+#result {
+    margin-top: 20px;
+    font-weight: bold;
+    color: #333;
+    font-size: 16px;
+    background-color: #e7f3fe;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #bbb;
+}
+
+#restartBtn {
+    margin-top: 20px;
+    background-color: #f44336;
+}
+
+#restartBtn:hover {
+    background-color: #e53935;
+}
+
+/* Special effects for eliminating players */
+.eliminated {
+    color: #e53935;
+    font-style: italic;
+    background-color: #ffe0e0;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* Fancy board effect */
+.container {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.container h1 {
+    font-family: 'Arial', sans-serif;
+    font-weight: 700;
+    color: #555;
+}
+
+/* Customize the input fields for a clean, rounded look */
+input[type="number"], input[type="range"], input[type="text"] {
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    font-size: 16px;
+}
+
+input[type="number"]:focus, input[type="range"]:focus, input[type="text"]:focus {
+    border-color: #74ebd5;
+    outline: none;
+}
+
+input[type="range"] {
+    background-color: #74ebd5;
+    height: 5px;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+/* Background effect for the body */
+body {
+    background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+    background-attachment: fixed;
+    height: 100vh;
+}
+
+/* Add a subtle hover effect for the input buttons */
+button:hover {
+    transform: scale(1.05);
+    background-color: #45a049;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Number Game</h1>
+        <p>Enter your names and select a number between 1 and 100. Your number will be hidden from others.</p>
+
+        <div id="player-inputs">
+            <div class="player" id="player1-input">
+                <label for="player1-name">Player 1 Name:</label>
+                <input type="text" id="player1-name" placeholder="Enter Name">
+                <label for="player1">
+                  <br>Player 1 No.:</label>
+                <input type="number" id="player1" min="1" max="100">
+                <button onclick="submitNumber(1)">Submit</button>
+            </div>
+            <div class="player" id="player2-input" style="display: none;">
+                <label for="player2-name">Player 2 Name:</label>
+                <input type="text" id="player2-name" placeholder="Enter Name">
+                <label for="player2"><br>Player 2 No.:</label>
+                <input type="number" id="player2" min="1" max="100">
+                <button onclick="submitNumber(2)">Submit</button>
+            </div>
+            <div class="player" id="player3-input" style="display: none;">
+                <label for="player3-name">Player 3 Name:</label>
+                <input type="text" id="player3-name" placeholder="Enter Name">
+                <label for="player3"><br>Player 3 No.:</label>
+                <input type="number" id="player3" min="1" max="100">
+                <button onclick="submitNumber(3)">Submit</button>
+            </div>
+            <div class="player" id="player4-input" style="display: none;">
+                <label for="player4-name">Player 4 Name:</label>
+                <input type="text" id="player4-name" placeholder="Enter Name">
+                <label for="player4"><br>Player 4 No.:</label>
+                <input type="number" id="player4" min="1" max="100">
+                <button onclick="submitNumber(4)">Submit</button>
+            </div>
+        </div>
+
+        <button id="playBtn" onclick="playGame()" style="display: none;">Play Game</button>
+
+        <div id="result"></div>
+
+        <button id="nextGameBtn" onclick="nextGame()" style="display: none;">Next Game</button>
+    </div>
+
+    <script>// script.js
+
+        let playerNumbers = {
+            player1: null,
+            player2: null,
+            player3: null,
+            player4: null
+        };
+        
+        let playerPoints = {
+            player1: 5,
+            player2: 5,
+            player3: 5,
+            player4: 5
+        };
+        
+        let playerNames = {
+            player1: '',
+            player2: '',
+            player3: '',
+            player4: ''
+        };
+        
+        let remainingPlayers = ['player1', 'player2', 'player3', 'player4'];
+        
+        // Function to handle number submission
+        function submitNumber(player) {
+            const nameInput = document.getElementById(`player${player}-name`);
+            const numberInput = document.getElementById(`player${player}`).value;
+            const rangeInput = document.getElementById(`player${player}-range`).value;
+        
+            const selectedNumber = numberInput ? parseInt(numberInput) : parseInt(rangeInput);
+        
+            if (selectedNumber < 1 || selectedNumber > 100 || isNaN(selectedNumber)) {
+                alert("Please enter a valid number between 1 and 100.");
+                return;
+            }
+        
+            // Store the player's number and name
+            playerNumbers[`player${player}`] = selectedNumber;
+            playerNames[`player${player}`] = nameInput.value;
+        
+            // Hide the input field for the current player
+            document.getElementById(`player${player}-input`).style.display = "none";
+        
+            // Show the next player's input field
+            if (player < 4) {
+                document.getElementById(`player${player + 1}-input`).style.display = "block";
+            } else {
+                document.getElementById("playBtn").style.display = "block";
+            }
+        }
+        
+        // Function to play the game and calculate the result
+        function playGame() {
+            // Check if all players have submitted their numbers
+            if (Object.values(playerNumbers).includes(null)) {
+                alert("All players need to submit their numbers before the game can start!");
+                return;
+            }
+        
+            // Calculate the average of the numbers
+            let average = (playerNumbers.player1 + playerNumbers.player2 + playerNumbers.player3 + playerNumbers.player4) / 4;
+        
+            // Multiply the average by 0.8 to get the target number
+            let target = average * 0.8;
+        
+            // Calculate the absolute difference between each player's number and the target
+            let differences = remainingPlayers.map(player => ({
+                player: playerNames[player],
+                diff: Math.abs(playerNumbers[player] - target),
+                id: player
+            }));
+        
+            // Find the player with the smallest difference
+            let winner = differences.reduce((prev, current) => (prev.diff < current.diff ? prev : current));
+        
+            // Update points: Winner gets 1 point, others lose 1 point
+            playerPoints[winner.id] += 1;
+            remainingPlayers.forEach(player => {
+                if (player !== winner.id) {
+                    playerPoints[player] -= 1;
+                }
+            });
+        
+            // Remove players with 0 points
+            remainingPlayers = remainingPlayers.filter(player => playerPoints[player] > 0);
+        
+            // Display the result
+            let resultText = `
+                The average of all numbers is: ${average.toFixed(2)}<br>
+                The target (average * 0.8) is: ${target.toFixed(2)}<br>
+                The winner is: ${winner.player} with a number closest to the target!<br>
+                ${winner.player} gets 1 point.<br>
+                <br>
+                Points:<br>
+                ${remainingPlayers.map(player => `${playerNames[player]}: ${playerPoints[player]}`).join('<br>')}
+            `;
+        
+            if (remainingPlayers.length === 1) {
+                resultText += `<br><br>The final winner is: ${playerNames[remainingPlayers[0]]}`;
+                document.getElementById("nextGameBtn").style.display = "none";
+            }
+        
+            document.getElementById("result").innerHTML = resultText;
+        
+            // Show the next game button
+            document.getElementById("nextGameBtn").style.display = "block";
+        }
+        
+        // Function to continue to the next game
+        function nextGame() {
+            // Reset the numbers but keep player names and points
+            playerNumbers = {
+                player1: null,
+                player2: null,
+                player3: null,
+                player4: null
+            };
+        
+            // Hide inputs and reset buttons
+            document.querySelectorAll('input[type="number"], input[type="range"]').forEach(input => input.value = '');
+            document.querySelectorAll('.player').forEach(playerDiv => playerDiv.style.display = "none");
+        
+            // Show Player 1's input and hide result and next game button
+            document.getElementById("player1-input").style.display = "block";
+            document.getElementById("result").innerHTML = "";
+            document.getElementById("playBtn").style.display = "none";
+            document.getElementById("nextGameBtn").style.display = "none";
+        }
+        </script>
+</body>
+</html>
